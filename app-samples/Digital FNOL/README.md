@@ -1,4 +1,4 @@
-#Expressions with Timestamps
+# Expressions with Timestamps
 
 **5:44 - Adding Progress Bar**
 ```
