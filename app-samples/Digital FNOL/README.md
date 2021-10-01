@@ -95,8 +95,8 @@
 **21:25 - Target URL for Makes**
 ("https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json")
 
-23:12 - Target URL for Models
-(“"https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{{make}}/modelyear/{{year}}?format=json"”)
+**23:12 - Target URL for Models**
+("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/{{make}}/modelyear/{{year}}?format=json")
 
 **24:18 - Transform**
 ```
