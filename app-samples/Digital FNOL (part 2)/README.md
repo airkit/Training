@@ -15,7 +15,7 @@ airData.results[0].__id
 [ claim ]
 ```
 
-**11:12 - Transform - grabbing ID of saved Claim **
+**11:12 - Transform - grabbing ID of saved Claim**
 ```
 airData.results[0].__id
 ```
