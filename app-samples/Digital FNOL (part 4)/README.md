@@ -103,27 +103,68 @@ IF(
 ```
 
 
-****
+**12:44 - Display list of Claim Statuses**
 ```
-```
-
-****
-```
-```
-
-****
-```
-```
-
-****
-```
-```
-
-****
-```
+"{{
+  IF(
+    ISEMPTY(
+      session.claim_statuses
+        [0]
+        .status
+    ),
+    "EXAMPLE STATUS",
+    item.status
+  )
+}}"
 ```
 
-****
+**14:40 - Display Claim Status Dates**
 ```
+"{{
+  IF(
+    ISEMPTY(
+      session.claim_statuses
+        [0]
+    ),
+    "EXAMPLE DATE",
+    FORMAT_DATE(
+      item.created_date,
+      "MMMM Do, YYYY"
+    )
+  )
+}}"
+```
+
+**17:40 - Display Other Party car**
+```
+"{{
+  session.involved_party
+    .vehicle_make
+}} {{
+  session.involved_party
+    .vehicle_model
+}}"
+```
+
+**18:09 - Display Other Party Name**
+```
+"{{
+  session.involved_party
+    .first_name
+}} {{
+  session.involved_party
+    .last_name
+}}"
+```
+
+
+**19:29 - actor first name**
+```
+actor.first_name
+```
+
+**19:40 - claim status text**
+```
+session.claim_statuses[0].status
 ```
 
