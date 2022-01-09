@@ -1,133 +1,170 @@
 # Expressions with Timestamps
 
-**5:58 - Sending customer object to AirData**
+**0:40 - Disabling Track a claim button**
 ```
-[ customer ]
-```
-
-**7:14 - Transform - grabbing ID of saved Customer**
-```
-airData.results[0].__id
+IF(ISEMPTY(session.claim))
 ```
 
-**10:31 - Passing Claim to AirData**
+**3:37 session.claim.__id**
 ```
-[ claim ]
-```
-
-**11:12 - Transform - grabbing ID of saved Claim **
-```
-airData.results[0].__id
+session.claim_statuses
 ```
 
-**14:12 - Sending Involved Party to AirData**
+
+**5:17 - Displaying Claim Statuses**
 ```
-[ involved_party ]
+"{{session.claim_statuses[0].status}}"
 ```
 
-**14:25 - Sending Involved Party to AirData**
+**6:18 - Displaying Claim Date**
 ```
-airData.results[0].__id
-```
-
-**15:12 - Sending Involved Party to AirData**
-```
-[
-  {
-    "Claim":
-      claim_id,
-    "status":
-      "SUBMITTED",
-    "created_date":
-      NOW().date
-  }
-]
+"{{
+  FORMAT_DATE(
+    session.claim_statuses
+      [0]
+      .created_date,
+    "MMMM Do, YYYY"
+  )
+}}"
 ```
 
-**17:28 - session.customer**
+**7:11 - Displaying Claim Incident Address**
 ```
-{
-  "first_name":
-    first_name,
-  "last_name":
-    last_name,
-  "policy_type":
-    policy_type,
-  "policy_number":
-    policy_number,
-  "phone":
-    phone
-}
+"{{
+  session.claim
+    .incident_address
+}}"
 ```
 
-**18:25 - session.customer**
-```
-session.customer.__id
-```
 
-**19:18 - session.incident_details_1**
-```
-{
-  "incident_address":
-    location.formattedAddress,
-  "incident_time":
-    time_input,
-  "incident_date":
-    date_input,
-  "am_pm":
-    am_pm
-}
-```
 
-**20:04 - session.incident_details_2**
+**11:00 - Displaying List Data**
 ```
-{
-  "Customer":
-    session.customer.__id,
-  "created_date":
-    NOW(),
-  "incident_damaged_areas":
-    activity.selected,
-  "incident_damage_further_details":
-    activity.text_area,
-  "photo_damage":
-    activity.media_upload
-}
-```
-
-**20:22 - session.claim**
-```
-MERGE_OBJECTS(
-  session.incident_details_1,
-  session.incident_details_2
+IF(
+  ISEMPTY(
+    session.claim_statuses
+      [*]
+  ),
+  [
+    {
+      "__id":
+        "d22edb5e-8a8f-4320-97a5-de443581b83f",
+      "Claim":
+        NULL,
+      "created_date":
+        {
+          "year":
+            2021,
+          "month":
+            10,
+          "day":
+            26
+        },
+      "status":
+        "SUBMITTED"
+    },
+    {
+      "__id":
+        "d22edb5e-8a8f-4320-97a5-de443581b93f",
+      "Claim":
+        NULL,
+      "created_date":
+        {
+          "year":
+            2021,
+          "month":
+            10,
+          "day":
+            28
+        },
+      "status":
+        "IN REVIEW"
+    },
+    {
+      "__id":
+        "d22edb5e-8a8f-4620-97a5-de443581b83f",
+      "Claim":
+        NULL,
+      "created_date":
+        {
+          "year":
+            2021,
+          "month":
+            10,
+          "day":
+            30
+        },
+      "status":
+        "APPROVED"
+    }
+  ],
+  session.claim_statuses[*]
 )
 ```
 
 
-**21:17 - session.involved_party**
+**12:44 - Display list of Claim Statuses**
 ```
-{
-  "first_name":
-    activity.first_name,
-  "last_name":
-    activity.last_name,
-  "vehicle_year":
-    activity.year_dropdown,
-  "vehicle_make":
-    activity.make_dropdown,
-  "vehicle_model":
-    activity.model_dropdown,
-  "insurance_provider":
-    activity.insurance_dropdown,
-  "policy_number":
-    activity.policy_number,
-  "insurance_document":
-    activity.upload_insurance_documents,
-  "drivers_license":
-    activity.upload_drivers_license,
-  "phone":
-    activity.phone,
-  "claim":
-    session.claim.__id
-}
+"{{
+  IF(
+    ISEMPTY(
+      session.claim_statuses
+        [0]
+        .status
+    ),
+    "EXAMPLE STATUS",
+    item.status
+  )
+}}"
 ```
+
+**14:40 - Display Claim Status Dates**
+```
+"{{
+  IF(
+    ISEMPTY(
+      session.claim_statuses
+        [0]
+    ),
+    "EXAMPLE DATE",
+    FORMAT_DATE(
+      item.created_date,
+      "MMMM Do, YYYY"
+    )
+  )
+}}"
+```
+
+**17:40 - Display Other Party car**
+```
+"{{
+  session.involved_party
+    .vehicle_make
+}} {{
+  session.involved_party
+    .vehicle_model
+}}"
+```
+
+**18:09 - Display Other Party Name**
+```
+"{{
+  session.involved_party
+    .first_name
+}} {{
+  session.involved_party
+    .last_name
+}}"
+```
+
+
+**19:29 - actor first name**
+```
+actor.first_name
+```
+
+**19:40 - claim status text**
+```
+session.claim_statuses[0].status
+```
+
